@@ -9,9 +9,8 @@ r=256;
 c=256;
 I=rgb2gray(I);
 I=imresize(I,[r,c]);
-figure
-imshow(I)
-title('Orginal image')
+
+
 key=zeros(1,r*c);
 key(1)=k;
 NEQR=zeros(r,c);
