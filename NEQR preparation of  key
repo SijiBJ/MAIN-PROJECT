@@ -1,0 +1,54 @@
+for m=2:r*c
+    key(m)=mod((si*(key(m-1)-(key(m-1)*key(m-1)))+(4-si)*((sin(pi*key(m-1)))/4)),1);
+end
+key1=zeros(1,r*c);
+m=1;
+for  i=2:r*c
+    key1(m)=mod(abs(fix((key(m)-fix(key(m)))*10^8)),256);
+    m=m+1;
+end
+% 
+% encryption=zeros(r,c); 
+key_enc=reshape(key1,[r,c]);
+
+NEQR1=zeros(r,c);
+mm=1;
+nn=1;
+ne=[]
+for i=1:2:r
+    for j=1:2:c
+      imgg=key_enc(i:i+1,j:j+1);  
+        N = zeros(2);
+      inc = 1;
+      for kk=1:2
+          for hh=1:2
+            
+              g=imgg(kk,hh);
+              x=kk-1;
+              y=hh-1;
+              
+              
+              a=de2bi(g,8,'left-msb');
+              ne(1)=taffoli(taffoli(double(a(1)),double(y),double(~x)),double(y),double(x));
+             ne(2)=taffoli(taffoli(taffoli(double(a(2)),double(~y),double(x)),double(~x),double(y)),x,y);
+             ne(3)=taffoli(taffoli(double(a(3)),double(x),double(~y)),double(x),double(y));
+             ne(4)=taffoli(a(4),double(y),double(x));
+             ne(5)=taffoli(taffoli(a(5),y,~x),double(y),double(x));
+             ne(6)=taffoli(taffoli(a(6),double(x),double(~y)),double(x),double(y));
+             ne(7)=taffoli(a(7),y,x);
+             ne(8)=taffoli(a(8),y,x);
+             neqr1=(ne(1)*2^7)+(ne(2)*2^6)+(ne(3)*2^5)+(ne(4)*2^4)+(ne(5)*2^3)+(ne(6)*2^2)+(ne(7)*2^1)+(ne(8)*2^0);
+              nn=nn+1;
+              N(inc) = neqr1;
+              inc = inc+1;
+          end
+          mm=mm+1;
+      end
+        N = N';
+        NEQR1(i:i+1,j:j+1)=N;
+        
+    end
+end
+
+figure,imshow(uint8(NEQR1))
+title('NEQR Representation of key')
