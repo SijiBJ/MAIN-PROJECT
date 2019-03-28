@@ -1,0 +1,14 @@
+clc
+clear all
+close all
+k=input('key');
+si=input('si');
+[fname,path]=uigetfile('choose encryption image');
+I=imread([path,fname]);
+r=256;
+c=256;
+I=rgb2gray(I);
+I=imresize(I,[r,c]);
+figure
+imshow(I)
+title('Orginal Image in Gray Scale')
