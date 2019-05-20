@@ -1,4 +1,4 @@
-function ou=taffoli(a,b,c)
+function ou=taffoli(c,a,b)
 
 ou=cnot(c,a*b);
 
